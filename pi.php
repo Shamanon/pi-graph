@@ -4,7 +4,7 @@
  ** $Author$
  ** $Date$
  ** $Revision$ 
- ** $HeadURL$
+ ** $URL$
  *
  * Pi Graph - Written by Joshua Besneatte
  * Completely free, link to my blog if you like it or send me some bitcoins
