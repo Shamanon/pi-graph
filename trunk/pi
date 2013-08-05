@@ -21,8 +21,18 @@
  * 
  * this version accepts command line arguments, eg 
  * ./pi [number of digits to graph] [display output] [start digit]
+ * 
+ * or you can use zero-reset mode and it will reset z,y to zero at selected intervals
+ * ./pi --zero-reset [reset threshold]
+ * this is not done yet
  *
  */
+
+if(array_search('--zero-reset',$argv)){
+	echo "this still needs to be done\n";
+	print_r($argv);
+	exit;
+}
 
 $size = null;
 $file = null;

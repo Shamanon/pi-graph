@@ -20,7 +20,7 @@
  *  this is the command line interface version, probably won't work on a webserver
  * 
  * this version accepts no arguments, it generates a file for every 1 million digits
- * pulled from the digits file
+ * pulled from the digits file, xgraph then graphs each block in a different color
  *
  */
 
