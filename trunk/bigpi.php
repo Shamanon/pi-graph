@@ -29,10 +29,26 @@ $file = null;
 $display = null;
 $delete = null;
 $startpoint = 0;
+$huge = false; // use the huge file ignored by svn, must be manually downloaded
+$huge_limit = 20000000;
 
-echo "Welcome to big pi\n an attempt to plot over 1000000 places";
+if(isset($argv[1]) && $argv[1] == "huge") $huge = true;
+if(isset($argv[2])) $huge_limit = $argv[2];
 
-$file = "bigpie.txt";
+
+echo "Welcome to bigpi!\nI graph Pi according to the besneatte algorithm, one million plots per file\n";
+sleep(3);
+echo "I am about to plot all points of pi, using the ".(!$huge?"standard":"huge")." size file\nExisting files will be overwritten.\nPress control + c to cancel\n";
+if($huge) echo "I will stop after $huge_limit digits\n";
+echo "Starting in: 5";
+for($i=5;$i--;$i!=0){
+	echo " ".$i;
+	sleep(1);
+}
+
+echo "\n";
+
+$file = !$huge ? "files/bigpie.txt" : "files/hugepie.txt"; 
 
 if(file_exists($file)) unlink($file);
 
@@ -44,21 +60,26 @@ $fnum = 0;
 $fnumf = str_pad($fnum, 3, '0', STR_PAD_LEFT);
 $count = 0;
 $filestring = $file.$fnumf;
+$total_count = 0;
 
-$handle = @fopen("digits", "r");
+$handle = @fopen(!$huge ? "digits" : "huge", "r");
 
 if(file_exists($file.$fnumf)) unlink($file.$fnumf);
 
+echo "Writing to file $file$fnumf";
+sleep(2);
+
 if ($handle) {
     while (($buffer = fgets($handle, 4096)) !== false) {
-		echo "Processing block: $block\n";
+		echo "\nProcessing block: $block\n";
 		$block++;
 		trim($buffer);
-        echo $buffer."\n";
         $pi = str_split($buffer);
-        foreach($pi as $v){
+        foreach($pi as $k => $v){
 			if(is_numeric($v)){
 				$count++;
+				echo "$v";
+				$total_count++;
 				switch($v){
 					case 0: 
 						$x = $x - 2;
@@ -67,10 +88,10 @@ if ($handle) {
 						$y = $y - 2;
 						break;
 					case 2:
-						$y--;
+						$x--;
 						break;
 					case 3:
-						$x--;
+						$y--;
 						break;
 					case 6:
 						$x++;
@@ -92,9 +113,14 @@ if ($handle) {
 					$filestring = "$filestring $file".$fnumf;
 					if(file_exists($file.$fnumf)) unlink($file.$fnumf);
 					$count=0;
+					echo "\n\nWriting to next file $file$fnumf\n\n";
+					echo "\n\nProcessed $total_count digits so far!\n\n";
+					sleep(2);
 				}	
 			}
+			if($total_count == $huge_limit) break;
 		}
+		if($total_count == $huge_limit) break;
 	}
 
     if (!feof($handle)) {
@@ -102,6 +128,8 @@ if ($handle) {
     }
     fclose($handle);
 }
+
+echo "$total_count digits processed! Launching xgraph\n";
 
 `xgraph $filestring &`;
 ?>
