@@ -1,11 +1,28 @@
 #!/usr/bin/php
 <?php
-// find a pattern in PI?
-// let each digit move the cursor, starts at 0,0
-// evens move x, odds move y
-// if number is 4 or 5 don't move
-// 0 and 1 = -2; 2,3 = -1; 6,7 = +1; 8,9 = +2 
-// this is the command line interface version, probably wont work on a webserver
+/** $Id$
+ ** $Author$
+ ** $Date$
+ ** $Revision$ 
+ ** $HeadURL$
+ *
+ * Pi Graph - Written by Joshua Besneatte
+ * Completely free, link to my blog if you like it or send me some bitcoins
+ * 
+ * bitcoin:12WshrtpEf9TXtLbv8gTjeM5DPBcosbZVZ
+ *
+ *
+ *  find a pattern in PI?
+ *  let each digit move the cursor, starts at 0,0
+ *  evens move x, odds move y
+ *  if number is 4 or 5 don't move
+ *  0 and 1 = -2; 2,3 = -1; 6,7 = +1; 8,9 = +2 
+ *  this is the command line interface version, probably won't work on a webserver
+ * 
+ * this version accepts command line arguments, eg 
+ * ./pi [number of digits to graph] [display output] [start digit]
+ *
+ */
 
 $size = null;
 $file = null;
