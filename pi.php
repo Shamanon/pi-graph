@@ -34,8 +34,12 @@ $display = null;
 $delete = null;
 $startpoint = 0;
 $rezero = false;
+$color_only = true;
+$xgraphopts =  "-ng -tk "; //-p -nb -nl
 
 echo "Welcome to pi-plot\n";
+
+$phi = array_search('phi',$argv) ? true : false;
 
 if(array_search('--zero-reset',$argv)){
 	$size = isset($argv[2]) ? $argv[2] : 1000000;
@@ -55,6 +59,7 @@ if(isset($argv[3])){
 	$startpoint = $argv[3];
 	$file = "files/".$startpoint."-".($startpoint+$size).'.txt';
 }else $file = "files/".$size.".txt";
+
 
 if(file_exists($file)){ 
 	
@@ -80,12 +85,12 @@ while($display !== 'y' && $display !== 'n'){
 $x = "0";
 $y = "0";
 
-require_once("digits.php");
+require_once($phi?"phi":"digits".".php");
 
-echo "starting at $startpoint\n";
-echo "$size digits of pi out of ".strlen($pi)." digits have been loaded\n";
-echo "writing x,y coordinates to $file\n";
-echo "display output: $display\n";
+echo "$size digits of pi out of ".strlen($pi)." digits will be loaded\n";
+echo "\nstarting at $startpoint\n";
+echo "\nwriting x,y coordinates to $file\n";
+echo "\ndisplay output: $display\n";
 
 sleep(1);
 
@@ -94,7 +99,7 @@ $filestring = $file;
 $cap = $size+$startpoint;
 
 a:
-echo "new values: startpoint = $startpoint, size = $size, cap = $cap\n\n";
+echo "\nnew values: startpoint = $startpoint, size = $size, cap = $cap\n\n";
 for($i=$startpoint;$i<=$cap;$i++){
 	$v = substr($pi,$i,1);
 	if(is_numeric($v)){
@@ -126,26 +131,30 @@ for($i=$startpoint;$i<=$cap;$i++){
 		}
 		if($display == 'y') echo "digit #$i is $v making the coordinates $x $y\n";
 		file_put_contents($file,"$x $y\n",FILE_APPEND);
-		if($rezero && $i == $size && $startpoint < 10000000){
+		if($rezero && $i == $size && $startpoint < strlen($pi)){
 			break;
 		}	
 	}
 }
 
-if($rezero && $startpoint < 10000000){
-	$x = 0;
-	$y = 0;
+if($rezero && $startpoint < strlen($pi)){
+	if(!$color_only){
+		$x = 0;
+		$y = 0;
+	}
 	echo "\n moving to next file\n";
 	echo "\ncurrent values: startpoint = $startpoint, size = $size, cap = $cap\n";
 	$startpoint = $startpoint + $size;
 	$cap = $size + $startpoint;
 	$file = "files/".$startpoint."-".($startpoint+$size).'.txt';
 	if(file_exists($file)) unlink($file);
+	touch($file);
 	echo "\nstarting at $startpoint\n";
 	echo "writing x,y coordinates to $file\n";
 	echo "display output: $display\n";
 	$filestring = "$filestring $file";
 	goto a;
 }
-`xgraph -ng $filestring &`;
+
+`xgraph $xgraphopts $filestring`;
 ?>
