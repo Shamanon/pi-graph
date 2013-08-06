@@ -30,13 +30,14 @@ $display = null;
 $delete = null;
 $startpoint = 0;
 $huge = false; // use the huge file ignored by svn, must be manually downloaded
-$huge_limit = 100000000;
+$huge_limit = 100000000; // stop at this many digits
+$file_size = 2000000; // how many coordinates per file
 
 if(isset($argv[1]) && $argv[1] == "huge") $huge = true;
 if(isset($argv[2])) $huge_limit = $argv[2];
 
 
-echo "\nWelcome to bigpi!\n\nI graph Pi according to the besneatte algorithm, one million plots per file\n";
+echo "\nWelcome to bigpi!\n\nI graph Pi according to the besneatte algorithm, ".$file_size." plots per file\n";
 sleep(1);
 echo "\nI am about to plot all points of pi, using the ".(!$huge?"standard":"huge")." size file\nExisting files will be overwritten.\nPress control + c to cancel\n";
 if($huge) echo "\nI will stop after $huge_limit digits\n";
@@ -107,11 +108,12 @@ if ($handle) {
 						break;
 				}
 				file_put_contents($file.$fnumf,"$x $y\n",FILE_APPEND);
-				if($count == 1000000){
+				if($count == $file_size){
 					$fnum++;
 					$fnumf = str_pad($fnum, 3, '0', STR_PAD_LEFT);
 					$filestring = "$filestring $file".$fnumf;
 					if(file_exists($file.$fnumf)) unlink($file.$fnumf);
+					touch($file.$fnumf);
 					$count=0;
 					echo "\n\nWriting to next file $file$fnumf\n\n";
 					echo "\n\nProcessed $total_count digits so far!\n\n";
