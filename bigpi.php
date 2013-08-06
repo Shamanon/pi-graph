@@ -30,23 +30,23 @@ $display = null;
 $delete = null;
 $startpoint = 0;
 $huge = false; // use the huge file ignored by svn, must be manually downloaded
-$huge_limit = 20000000;
+$huge_limit = 100000000;
 
 if(isset($argv[1]) && $argv[1] == "huge") $huge = true;
 if(isset($argv[2])) $huge_limit = $argv[2];
 
 
-echo "Welcome to bigpi!\nI graph Pi according to the besneatte algorithm, one million plots per file\n";
-sleep(3);
-echo "I am about to plot all points of pi, using the ".(!$huge?"standard":"huge")." size file\nExisting files will be overwritten.\nPress control + c to cancel\n";
-if($huge) echo "I will stop after $huge_limit digits\n";
-echo "Starting in: 5";
+echo "\nWelcome to bigpi!\n\nI graph Pi according to the besneatte algorithm, one million plots per file\n";
+sleep(1);
+echo "\nI am about to plot all points of pi, using the ".(!$huge?"standard":"huge")." size file\nExisting files will be overwritten.\nPress control + c to cancel\n";
+if($huge) echo "\nI will stop after $huge_limit digits\n";
+echo "\nStarting in: 5";
 for($i=5;$i--;$i!=0){
 	echo " ".$i;
 	sleep(1);
 }
 
-echo "\n";
+echo "\n\n";
 
 $file = !$huge ? "files/bigpie.txt" : "files/hugepie.txt"; 
 
@@ -66,7 +66,7 @@ $handle = @fopen(!$huge ? "digits" : "huge", "r");
 
 if(file_exists($file.$fnumf)) unlink($file.$fnumf);
 
-echo "Writing to file $file$fnumf";
+echo "Writing to file $file$fnumf\n";
 sleep(2);
 
 if ($handle) {
@@ -116,11 +116,13 @@ if ($handle) {
 					echo "\n\nWriting to next file $file$fnumf\n\n";
 					echo "\n\nProcessed $total_count digits so far!\n\n";
 					sleep(2);
+				}
+				if($total_count == $huge_limit){
+					echo "\n\n$total_count digits processed! Launching xgraph\n";
+					goto a;
 				}	
 			}
-			if($total_count == $huge_limit) break;
 		}
-		if($total_count == $huge_limit) break;
 	}
 
     if (!feof($handle)) {
@@ -129,7 +131,7 @@ if ($handle) {
     fclose($handle);
 }
 
-echo "$total_count digits processed! Launching xgraph\n";
+a:
 
 `xgraph $filestring &`;
 ?>
