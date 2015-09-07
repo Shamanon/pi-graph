@@ -1,0 +1,19 @@
+# Screenshots from Xgraph #
+
+look to the upper right hand corner of the window, the file loaded is the number of digits dot txt, for example 1000.txt
+
+Some images are of various zooms, I am still working on generating a high resolution output, I might need to replace xgraph as my display program.
+
+<img src='http://artofconfusion.org/pi/0_start.png' alt='0_start.png' title='0_start.png'><br>
+<img src='http://artofconfusion.org/pi/0_start_2.png' alt='0_start_2.png' title='0_start_2.png'><br>
+<img src='http://artofconfusion.org/pi/fp_cover.png' alt='fp_cover.png' title='fp_cover.png'><br>
+<img src='http://artofconfusion.org/pi/pi_100.png' alt='pi_100.png' title='pi_100.png'><br>
+<img src='http://artofconfusion.org/pi/pi_1000.png' alt='pi_1000.png' title='pi_1000.png'><br>
+<img src='http://artofconfusion.org/pi/pi_10000.png' alt='pi_10000.png' title='pi_10000.png'><br>
+<img src='http://artofconfusion.org/pi/pi_100000.png' alt='pi_100000.png' title='pi_100000.png'><br>
+<img src='http://artofconfusion.org/pi/pi_1000000.png' alt='pi_1000000.png' title='pi_1000000.png'><br>
+<img src='http://artofconfusion.org/pi/pi_10000000.png' alt='pi_10000000.png' title='pi_10000000.png'><br>
+<img src='http://artofconfusion.org/pi/pi_200000.png' alt='pi_200000.png' title='pi_200000.png'><br>
+<img src='http://artofconfusion.org/pi/pi_300000.png' alt='pi_300000.png' title='pi_300000.png'><br>
+<img src='http://artofconfusion.org/pi/pi_400000.png' alt='pi_400000.png' title='pi_400000.png'><br>
+<img src='http://artofconfusion.org/pi/uber_pi.png' alt='uber_pi.png' title='uber_pi.png'><br>
